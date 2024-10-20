@@ -14,15 +14,14 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
     @Value("${application.security.jwt.secret-key}")
-    private long jwtExpiration;
-    @Value("${application.security.jwt.expiration}")
     private String secretKey;
+    @Value("${application.security.jwt.expiration}")
+    private long jwtExpiration;
 
 
     public String extractUserName(String token) {
@@ -47,13 +46,13 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    private String generateToken(Map<String, Objects> claims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
 
         return buildToken(claims,userDetails,jwtExpiration);
     }
 
     private String buildToken(
-            Map<String, Objects> extraClaims,
+            Map<String, Object> extraClaims,
             UserDetails userDetails,
             long jwtExpiration
     ) {
